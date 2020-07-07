@@ -27,6 +27,7 @@ func main() {
 	lambda.Start(HandleRequest)
 }
 
+// HandleRequest contains the code which will be executed.
 func HandleRequest() error {
 	sess, err := session.NewSession()
 	if err != nil {
