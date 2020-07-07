@@ -18,7 +18,7 @@ import (
 
 var (
 	cliTopicARN = kingpin.Flag("topic", "AWS SNS topic ARN to post messages").Envar("CLOUDFRONT_CERTIFICATE_EXPIRATION_TOPIC_ARN").String()
-	cliAge = kingpin.Flag("age", "How long before development teams should be notified").Default("720h").Envar("CLOUDFRONT_CERTIFICATE_EXPIRATION_AGE").Duration()
+	cliAge      = kingpin.Flag("age", "How long before development teams should be notified").Default("720h").Envar("CLOUDFRONT_CERTIFICATE_EXPIRATION_AGE").Duration()
 )
 
 func main() {
