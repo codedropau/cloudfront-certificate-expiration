@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/codedropau/cloudfront-certificate-expiration/internal/certutils"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -12,6 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/sns"
 	"gopkg.in/alecthomas/kingpin.v2"
 
+	"github.com/codedropau/cloudfront-certificate-expiration/internal/certutils"
 	"github.com/codedropau/cloudfront-certificate-expiration/internal/discovery"
 	"github.com/codedropau/cloudfront-certificate-expiration/internal/message"
 )
