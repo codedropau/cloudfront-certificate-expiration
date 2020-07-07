@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/acm"
 	"github.com/aws/aws-sdk-go/service/cloudfront"
@@ -23,7 +24,10 @@ var (
 
 func main() {
 	kingpin.Parse()
+	lambda.Start(HandleRequest)
+}
 
+func HandleRequest() error {
 	sess, err := session.NewSession()
 	if err != nil {
 		panic(err)
@@ -45,4 +49,6 @@ func main() {
 	}
 
 	fmt.Println("Message sent with ID:", id)
+
+	return nil
 }
