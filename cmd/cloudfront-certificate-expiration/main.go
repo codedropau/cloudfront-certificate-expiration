@@ -31,22 +31,22 @@ func main() {
 func HandleRequest() error {
 	sess, err := session.NewSession()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	client, err := discovery.New(cloudfront.New(sess), acm.New(sess), iam.New(sess))
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	certificates, err := client.GetCertificates()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	id, err := message.Send(sns.New(sess), *cliTopicARN, certutils.Filter(certificates, time.Now().Add(*cliAge)))
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	fmt.Println("Message sent with ID:", id)
