@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/endpoints"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/acm"
 	"github.com/aws/aws-sdk-go/service/cloudfront"
@@ -29,7 +31,10 @@ func main() {
 
 // HandleRequest contains the code which will be executed.
 func HandleRequest() error {
-	sess, err := session.NewSession()
+	sess, err := session.NewSession(&aws.Config{
+		// CloudFront distributions and certificates are based in us-east-1.
+		Region: aws.String(endpoints.UsEast1RegionID),
+	})
 	if err != nil {
 		return err
 	}

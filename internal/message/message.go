@@ -26,7 +26,7 @@ func Send(client snsiface.SNSAPI, topic string, certificates []discovery.Certifi
 		TopicArn: aws.String(topic),
 		MessageAttributes: map[string]*sns.MessageAttributeValue{
 			"severity": {
-				DataType: aws.String("String"),
+				DataType:    aws.String("String"),
 				StringValue: aws.String("warning"),
 			},
 		},
