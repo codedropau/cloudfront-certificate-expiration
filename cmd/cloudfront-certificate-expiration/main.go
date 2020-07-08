@@ -31,15 +31,21 @@ func main() {
 
 // HandleRequest contains the code which will be executed.
 func HandleRequest() error {
-	sess, err := session.NewSession(&aws.Config{
-		// CloudFront distributions and certificates are based in us-east-1.
+	// Session for interacting with global sessions (CloudFront/ACM/IAM).
+	global, err := session.NewSession(&aws.Config{
 		Region: aws.String(endpoints.UsEast1RegionID),
 	})
 	if err != nil {
 		return err
 	}
 
-	client, err := discovery.New(cloudfront.New(sess), acm.New(sess), iam.New(sess))
+	// Session for interacting with local services (SNS).
+	local, err := session.NewSession()
+	if err != nil {
+		return err
+	}
+
+	client, err := discovery.New(cloudfront.New(global), acm.New(global), iam.New(global))
 	if err != nil {
 		return err
 	}
@@ -57,7 +63,7 @@ func HandleRequest() error {
 
 	fmt.Println("Sending message to SNS topic arn:", *cliTopicARN)
 
-	id, err := message.Send(sns.New(sess), *cliTopicARN, filtered)
+	id, err := message.Send(sns.New(local), *cliTopicARN, filtered)
 	if err != nil {
 		return err
 	}
