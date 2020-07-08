@@ -55,6 +55,8 @@ func HandleRequest() error {
 		return nil
 	}
 
+	fmt.Println("Sending message to SNS topic arn:", *cliTopicARN)
+
 	id, err := message.Send(sns.New(sess), *cliTopicARN, filtered)
 	if err != nil {
 		return err
