@@ -44,7 +44,13 @@ func HandleRequest() error {
 		return err
 	}
 
-	id, err := message.Send(sns.New(sess), *cliTopicARN, certutils.Filter(certificates, time.Now().Add(*cliAge)))
+	filtered := certutils.Filter(certificates, time.Now().Add(*cliAge))
+
+	if len(filtered) == 0 {
+		return nil
+	}
+
+	id, err := message.Send(sns.New(sess), *cliTopicARN, filtered)
 	if err != nil {
 		return err
 	}

@@ -24,6 +24,12 @@ func Send(client snsiface.SNSAPI, topic string, certificates []discovery.Certifi
 		Subject:  aws.String("CloudFront certificates are about to expire"),
 		Message:  aws.String(table.String()),
 		TopicArn: aws.String(topic),
+		MessageAttributes: map[string]*sns.MessageAttributeValue{
+			"severity": {
+				DataType: aws.String("String"),
+				StringValue: aws.String("warning"),
+			},
+		},
 	}
 
 	resp, err := client.Publish(input)
